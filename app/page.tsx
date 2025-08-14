@@ -5,7 +5,7 @@ import { Calendar, Users, Clock, Shield } from "lucide-react"
 import Link from "next/link"
 
 export default async function HomePage() {
-  if (!isSupabaseConfigured) {
+  if (!(await isSupabaseConfigured())) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Connect Supabase to get started</h1>
@@ -13,7 +13,7 @@ export default async function HomePage() {
     )
   }
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
